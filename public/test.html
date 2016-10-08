@@ -45,11 +45,10 @@
 
 	<script>
 	// define sign in function
-	function signIn(){
+	function Info(){
 		// grab data from form
 		var data = {
-			username: $('#username').val().trim(),
-			password: $('#password').val().trim()
+			username: $('#input').val().trim()
 		};
 		// grab url to ajax call
 		var currentURL = location.origin + "/api/auth";
@@ -63,7 +62,7 @@
 	// define call on button
 	$(document).on('click', '#submit', function(){
 		// sign in
-		signIn();
+		Info();
 		// prevent default behavior
 		return false;
 	})
