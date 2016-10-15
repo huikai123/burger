@@ -33,6 +33,7 @@ var orm = {
 		// vals is an array of values that we want to save to cols
 		// cols are the columns we want to insert the values into
 	create: function (table, cols, vals, cb) {
+		console.log("vals", vals);
 		var queryString = 'INSERT INTO ' + table;
 
 		queryString = queryString + ' (';
@@ -42,7 +43,7 @@ var orm = {
 		queryString = queryString + printQuestionMarks(vals.length);
 		queryString = queryString + ') ';
 
-		console.log(queryString);
+		console.log("queryString",queryString);
 
 		connection.query(queryString, vals, function (err, result) {
 			if (err) throw err;
@@ -52,6 +53,9 @@ var orm = {
 		// objColVals would be the columns and values that you want to update
 		// an example of objColVals would be {name: panther, sleepy: true}
 	update: function (table, objColVals, condition, cb) {
+		console.log("table:", table);
+		console.log("objColVals:", objColVals);
+		console.log("condition:", condition);
 		var queryString = 'UPDATE ' + table;
 
 		queryString = queryString + ' SET ';
