@@ -1,104 +1,88 @@
-<ul>
-  {{#each burgers}}
-    {{#unless this.devoured}}
-      <li>
-        {{this.name}}
-
-        <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
-          <input type="hidden" name="devoured" value="true">
-          <button type="submit">Devoured</button>
-        </form>
-      </li>
-    {{/unless}}
-  {{/each}}
-</ul>
-
-
-<ul>
-  {{#each burgers}}
-    {{#if this.devoured}}
-      <li>
-        {{this.name}}
-
-        <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
-          <input type="hidden" name="devoured" value="false">
-          <button type="submit">Devoured</button>
-        </form>
-      </li>
-    {{/if}}
-  {{/each}}
-</ul>
-
-
-
-
-
-
-
-
-<form class="create-update-form" action="burgers/create" method="POST">
-
-  <div class="form-group">
-    <label for="ca">Burg Name:</label>
-    <input type="text" id="ca" name="name">
-  </div>
-
-  <div class="form-group">
-    <label for="slee">Sleepy?</label><br>
-    <input type="radio" name="sleepy" value="1" checked> Sleepy!<br>
-    <input type="radio" name="sleepy" value="0"> Awake
-  </div>
-
-  <button type="submit">Devoured</button>
-</form>
-
 <div class="container">
-    <div class="row">
-      <div class="jumbotron">
-        <h1 class=""> Eat-Da-Burger!</h1>
-        <hr>
-        
-      </div>
+    <div class="row text-center">
+        <div class="col-xs-12">
+            <div class="jumbotron burgerHead">
+                <h1>Eat-Da-Burger!</h1>
+                <form method="POST" action="/burgers/create" class="form-inline">
+                    <div class="form-group">
+                        <input type="hidden" name="devoured" value="0"/>
+                        <label class="sr-only" for="burger-input">Delicious burger</label>
+                        <input name="burger" type="text" class="form-control" id="burger-input"
+                               placeholder="Enter a burger"/>
+                    </div>
+                    <button type="submit" class="btn btn-default">SUBMIT</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-3">
-        
-        <input type="input" name="input" id="input" class="form-control" required >
-        <br>
-        <button id="submit">Submit!</button>
-        <br>
-      </div>
+    <div class="row text-center">
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">BURGERS</div>
+                <div id="burgers-added" class="panel-body">
+
+                    <hr>
+
+                    {{#each burgers}}
+                        {{#unless devoured}}
+                            <form method="POST" action="/burgers/update/{{burger_id}}?_method=PUT" class="form-inline">
+                                <div class="row text-center">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <input type="hidden" name="devoured" value="1"/>
+                                            <label class="sr-only">Delicious burger</label>
+                                            <p class="form-control-static">{{ burger_name }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+
+                                        <button id="burger-id{{burger_id}}" type="submit" class="btn btn-default">EAT
+                                            ME!
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </form>
+                        {{/unless}}
+                    {{/each}}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">DEVOURED BURGERS</div>
+                <div id="burgers-devoured" class="panel-body">
+
+                    <hr>
+
+                    {{#each burgers}}
+                        {{#if devoured}}
+                            <form method="POST" action="/burgers/delete/{{burger_id}}?_method=DELETE"
+                                  class="form-inline">
+                                <div class="row text-center">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label class="sr-only">Devoured burger</label>
+                                            <p class="form-control-static">{{ burger_name }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button id="burger-id{{burger_id}}" type="submit" class="btn btn-default">
+                                            DELETE!
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </form>
+                        {{/if}}
+                    {{/each}}
+
+                </div>
+            </div>
+        </div>
     </div>
 
-
-      <footer class="footer">
-            <p>Enter a burger you want to eat, click "submit" button.</p>
-      </footer>
-
-  </div>
-
-  <script>
-  // define sign in function
-  function Info(){
-    // grab data from form
-    var data = {
-      username: $('#input').val().trim()
-    };
-    // grab url to ajax call
-    var currentURL = location.origin + "/api/auth";
-
-    // post our login data
-    $.post(currentURL, data, function(results){
-      console.log(results);
-    });
-  }
-
-  // define call on button
-  $(document).on('click', '#submit', function(){
-    // sign in
-    Info();
-    // prevent default behavior
-    return false;
-  })
-  </script>
+</div>
